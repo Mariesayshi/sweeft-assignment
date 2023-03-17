@@ -1,0 +1,18 @@
+.user {
+    width: 15rem;
+  display: inline-block;
+  border: 1px solid #ccc;
+  margin: 0.5rem;
+}
+
+.userName {
+  font-weight: bold;
+}
+
+.userImg {
+  width: 100%;
+}
+
+.userTextContent {
+  padding: 0.7rem 0.5rem;
+}
