@@ -9,12 +9,10 @@ const getAllUsers = async (page, size, userId) => {
   if (!userId) {
     let response = await fetch(`${apiURL}/${page}/${size}`);
     let responseJson = await response.json();
-    // console.log(responseJson);
     return responseJson;
   } else {
     let response = await fetch(`${apiURL}/${userId}/friends/${page}/${size}`);
     let responseJson = await response.json();
-    // console.log(responseJson);
     return responseJson;
   }
 };
@@ -54,7 +52,6 @@ const UserList = (props) => {
 
   useEffect(() => {
     if (data) {
-      console.log(data.list);
       let newArr = data.list.map((el, i) => {
         let newEl = <User key={"user" + el.id} userInfo={el} />;
         return newEl;
@@ -65,7 +62,6 @@ const UserList = (props) => {
   }, [data]);
 
   useEffect(() => {
-    console.log("mounted");
     const onScroll = (e) => {
       const scrollTop = document.documentElement.scrollTop;
       const scrollHeight = document.documentElement.scrollHeight;
@@ -79,7 +75,6 @@ const UserList = (props) => {
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
-      console.log("unmounted");
       window.removeEventListener("scroll", onScroll);
     };
   }, []);

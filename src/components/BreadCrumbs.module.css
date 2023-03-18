@@ -5,3 +5,11 @@
 .breadCrumb { 
     cursor: pointer;
 }
+
+.crumb { 
+    text-decoration: none;
+}
+
+.crumbName { 
+    text-decoration: underline;
+}

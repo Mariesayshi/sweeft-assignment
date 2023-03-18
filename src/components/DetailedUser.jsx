@@ -11,15 +11,12 @@ let apiURL =
 const getUser = async (userId) => {
   let response = await fetch(`${apiURL}/${userId}`);
   let responseJson = await response.json();
-  // console.log(responseJson);
   return responseJson;
 };
 
 const DetailedUser = (props) => {
-  console.log(props);
   const [detailedUserData, setDetailedUserData] = useState(null);
   const { id } = useParams();
-  console.log("id: ", id);
 
   useEffect(() => {
     const getUserInsideUseEffect = async () => {
@@ -37,10 +34,7 @@ const DetailedUser = (props) => {
       {detailedUserData ? (
         <>
           <Header detailedUserData={detailedUserData} />
-          {props.breadCrumbs.map((el) => (
-            <p>{el.name}</p>
-          ))}
-          <BreadCrumbs data={props.breadCrumbs} />
+          <BreadCrumbs breadCrumbs={props.breadCrumbs} />
           <h2>Friends:</h2>
           <UserList userId={id} />
         </>
