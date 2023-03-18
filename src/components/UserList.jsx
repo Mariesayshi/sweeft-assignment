@@ -11,30 +11,47 @@ const getAllUsers = async (page, size) => {
   return responseJson;
 };
 
-const UserList = () => {
+let canFetch = true;
+
+const UserList = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
+  const [page, setPage] = useState(1);
   const [htmlData, setHtmlData] = useState(null);
 
-  // console.log('data: ', data)
   useEffect(() => {
     const getDataInsideUseEffect = async () => {
-      setIsLoading(true)
-      let response = await getAllUsers(1, 20);
-      setData(response);
+      setIsLoading(true);
+      let response = await getAllUsers(page, 100);
+      setData((prevState) => {
+        if (
+          !prevState ||
+          response.pagination.total >
+            prevState.list.length + response.list.length
+        ) {
+          canFetch = true;
+        }
+
+        if (!prevState) return response;
+        else {
+          return {
+            pagination: response.pagination,
+            list: [...prevState.list, ...response.list],
+          };
+        }
+      });
     };
     getDataInsideUseEffect();
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     if (data) {
       console.log(data.list);
       let newArr = data.list.map((el, i) => {
-        console.log(el);
         let newEl = <User key={"user" + el.id} userInfo={el} />;
         return newEl;
       });
-      setIsLoading(false)
+      setIsLoading(false);
       setHtmlData(newArr);
     }
   }, [data]);
@@ -42,7 +59,13 @@ const UserList = () => {
   useEffect(() => {
     console.log("mounted");
     const onScroll = (e) => {
-      console.log(e);
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight;
+      if (scrollHeight - clientHeight - scrollTop <= 100 && canFetch) {
+        setPage((prevState) => prevState + 1);
+        canFetch = false;
+      }
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
