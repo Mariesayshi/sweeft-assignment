@@ -1,8 +1,9 @@
 .user {
-    width: 15rem;
-  display: inline-block;
+  width: 48%;
   border: 1px solid #ccc;
   margin: 0.5rem;
+  text-decoration: none;
+  color: black;
 }
 
 .userName {
@@ -14,5 +15,11 @@
 }
 
 .userTextContent {
-  padding: 0.7rem 0.5rem;
+  padding: 0.3rem 0.5rem;
+}
+
+@media (min-width: 61.875rem) {
+  .user {
+    width: calc((100% - 4rem)/4);
+  }
 }

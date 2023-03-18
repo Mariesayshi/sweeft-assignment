@@ -1,0 +1,7 @@
+.userList { 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 75rem;
+}

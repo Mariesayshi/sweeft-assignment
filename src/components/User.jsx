@@ -1,10 +1,11 @@
 import classes from "./User.module.css";
+import { Link } from "react-router-dom";
 
 const User = (props) => {
   let userInfo = props.userInfo;
 
   return (
-    <div className={classes.user}>
+    <Link to={`/user/${userInfo.id}`} className={classes.user}>
       <img
         className={classes.userImg}
         src={`${userInfo.imageUrl}?v=${userInfo.id}`}
@@ -15,7 +16,7 @@ const User = (props) => {
         >{`${userInfo.prefix} ${userInfo.name} ${userInfo.lastName}`}</div>
         <div>{userInfo.title}</div>
       </div>
-    </div>
+    </Link>
   );
 };
 

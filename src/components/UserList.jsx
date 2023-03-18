@@ -1,14 +1,22 @@
 import { useState, useEffect } from "react";
 import User from "./User";
+import classes from "./UserList.module.css";
 
 let apiURL =
   "http://sweeftdigital-intern.eu-central-1.elasticbeanstalk.com/user";
 
-const getAllUsers = async (page, size) => {
-  let response = await fetch(`${apiURL}/${page}/${size}`);
-  let responseJson = await response.json();
-  // console.log(responseJson);
-  return responseJson;
+const getAllUsers = async (page, size, userId) => {
+  if (!userId) {
+    let response = await fetch(`${apiURL}/${page}/${size}`);
+    let responseJson = await response.json();
+    // console.log(responseJson);
+    return responseJson;
+  } else {
+    let response = await fetch(`${apiURL}/${userId}/friends/${page}/${size}`);
+    let responseJson = await response.json();
+    // console.log(responseJson);
+    return responseJson;
+  }
 };
 
 let canFetch = true;
@@ -22,7 +30,7 @@ const UserList = (props) => {
   useEffect(() => {
     const getDataInsideUseEffect = async () => {
       setIsLoading(true);
-      let response = await getAllUsers(page, 100);
+      let response = await getAllUsers(page, 50, props.userId);
       setData((prevState) => {
         if (
           !prevState ||
@@ -77,7 +85,7 @@ const UserList = (props) => {
   }, []);
 
   return (
-    <section className="userList">
+    <section className={classes.userList}>
       {htmlData}
       {isLoading ? <p>Loading...</p> : null}
     </section>
